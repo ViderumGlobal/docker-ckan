@@ -35,9 +35,11 @@ sub vcl_backend_response {
 
   # Encourage assets to be cached by proxies and browsers for 1 day
   if (bereq.url ~ "\.(png|gif|jpg|swf|css|js)") {
-    unset beresp.http.set-cookie;
-    set beresp.http.Cache-Control = "public, max-age=86400";
-    set beresp.ttl = 1d;
+    if (!bereq.url ~ "\.(json)") {
+      unset beresp.http.set-cookie;
+      set beresp.http.Cache-Control = "public, max-age=86400";
+      set beresp.ttl = 1d;
+    }
   }
 
   # Encourage CKAN vendor assets (which are versioned) to be cached by
@@ -81,7 +83,7 @@ sub vcl_recv {
 
   unset req.http.X-Forwarded-For;
   set req.http.X-Forwarded-For = req.http.X-Real-IP;
-} 
+}
 sub vcl_hash {
      # http://serverfault.com/questions/112531/ignoring-get-parameters-in-varnish-vcl
      hash_data(req.url);
@@ -96,15 +98,15 @@ sub vcl_hash {
 }
 sub vcl_deliver {
     if (!resp.http.Vary) {
-        set resp.http.Vary = "Accept-Encoding";   
+        set resp.http.Vary = "Accept-Encoding";
     } else if (resp.http.Vary !~ "(?i)Accept-Encoding") {
         set resp.http.Vary = resp.http.Vary + ",Accept-Encoding";
-    }    
+    }
     unset resp.http.X-Varnish;
     unset resp.http.Via;
     unset resp.http.Age;
     unset resp.http.X-Powered-By;
-}   
+}
 sub vcl_backend_error {
     unset beresp.http.Server;
     if (beresp.status == 751) {
