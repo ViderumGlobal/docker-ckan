@@ -1,5 +1,5 @@
 VERSION := $(shell git describe --tags --exact-match 2>/dev/null || echo latest)
-DOCKERHUB_NAMESPACE ?= keitaro
+DOCKERHUB_NAMESPACE ?= viderum
 IMAGE := ${DOCKERHUB_NAMESPACE}/ckan:${VERSION}
 
 build:

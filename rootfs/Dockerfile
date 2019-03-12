@@ -1,12 +1,12 @@
-FROM keitaro/base:0.5
+FROM viderum/base:0.5
 
-MAINTAINER Keitaro Inc <info@keitaro.info>
+MAINTAINER Datopian <info@keitaro.info>
 
 ENV APP_DIR=/srv/app
 ENV SRC_DIR=/srv/app/src
 ENV PIP_SRC=${SRC_DIR}
-ENV GIT_URL=https://github.com/keitaroinc/ckan.git
-ENV GIT_BRANCH=2.7.4-fix-psycopg2-issue
+ENV GIT_URL=https://github.com/ckan/ckan.git
+ENV GIT_BRANCH=ckan-2.7.5
 ENV CKAN_SITE_URL=http://localhost:5000
 ENV CKAN__PLUGINS image_view text_view recline_view datastore datapusher harvest ckan_harvester archiver report envvars
 
