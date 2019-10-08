@@ -6,7 +6,7 @@ ENV APP_DIR=/srv/app
 ENV SRC_DIR=/srv/app/src
 ENV PIP_SRC=${SRC_DIR}
 ENV GIT_URL=https://github.com/ckan/ckan.git
-ENV GIT_BRANCH=ckan-2.7.4
+ENV GIT_BRANCH=ckan-2.7.5
 ENV CKAN_SITE_URL=http://localhost:5000
 ENV CKAN__PLUGINS image_view text_view recline_view datastore datapusher harvest ckan_harvester archiver report envvars
 
@@ -58,9 +58,6 @@ RUN apk add --no-cache git \
     mkdir /etc/supervisord.d && \
     #pip wheel --wheel-dir=/wheels uwsgi gevent && \
     rm -rf ${SRC_DIR}/get-pip.py
-
-RUN echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
-    apk add --update --no-cache geos@testing geos-dev@testing py-geos@testing
 
 COPY setup/supervisord.conf /etc
 
