@@ -32,7 +32,6 @@ RUN apk add --no-cache git \
         py2-gevent \
         uwsgi-gevent \
         libmagic \
-        varnish \
         sudo && \
     # Packages to build CKAN requirements and plugins
     apk add --no-cache --virtual .build-deps \
@@ -146,8 +145,6 @@ COPY setup/prerun_harvest.py ${APP_DIR}/prerun_harvest.py
 COPY setup/redis.conf /etc/supervisord.d/redis.conf
 COPY setup/uwsgi.conf /srv/app/uwsgi.conf
 COPY setup/celery.conf /etc/supervisord.d/celery.conf
-COPY setup/varnish/default.vcl /etc/varnish/default.vcl
-RUN chown -R ckan:ckan /etc/varnish /var/lib/varnish
 
 RUN chown ckan -R /srv/app
 

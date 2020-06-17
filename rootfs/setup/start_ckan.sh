@@ -16,8 +16,6 @@ then
       htpasswd -d -b -c /srv/app/.htpasswd $HTPASSWD_USER $HTPASSWD_PASSWORD
       # Start supervisord
       supervisord --configuration /etc/supervisord.conf &
-      # Start Varnish
-      sudo -u ckan -EH varnishd -f /etc/varnish/default.vcl -s malloc,100M -a 0.0.0.0:5000
       # Start uwsgi with basicauth
       sudo -u ckan -EH uwsgi --ini /srv/app/uwsgi.conf --pcre-jit $UWSGI_OPTS
     else
@@ -27,12 +25,9 @@ then
   else
     # Start supervisord
     supervisord --configuration /etc/supervisord.conf &
-    # Start Varnish
-    sudo -u ckan -EH varnishd -f /etc/varnish/default.vcl -s malloc,100M -a 0.0.0.0:5000
     # Start uwsgi
     sudo -u ckan -EH uwsgi $UWSGI_OPTS
   fi
 else
   echo "[prerun] failed...not starting CKAN."
 fi
-
