@@ -81,7 +81,7 @@ sub vcl_recv {
 
   unset req.http.X-Forwarded-For;
   set req.http.X-Forwarded-For = req.http.X-Real-IP;
-} 
+}
 sub vcl_hash {
      # http://serverfault.com/questions/112531/ignoring-get-parameters-in-varnish-vcl
      hash_data(req.url);
@@ -96,15 +96,15 @@ sub vcl_hash {
 }
 sub vcl_deliver {
     if (!resp.http.Vary) {
-        set resp.http.Vary = "Accept-Encoding";   
+        set resp.http.Vary = "Accept-Encoding";
     } else if (resp.http.Vary !~ "(?i)Accept-Encoding") {
         set resp.http.Vary = resp.http.Vary + ",Accept-Encoding";
-    }    
+    }
     unset resp.http.X-Varnish;
     unset resp.http.Via;
     unset resp.http.Age;
     unset resp.http.X-Powered-By;
-}   
+}
 sub vcl_backend_error {
     unset beresp.http.Server;
     if (beresp.status == 751) {
@@ -117,4 +117,10 @@ sub vcl_backend_error {
         set beresp.status = 301;
         return (deliver);
     }
+    if (beresp.status == 503) {
+        set beresp.http.Location = beresp.http.response;
+        set beresp.status = 301;
+        return (deliver);
+    }
+
 }
