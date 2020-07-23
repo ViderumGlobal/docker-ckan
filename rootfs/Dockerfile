@@ -89,7 +89,7 @@ ENV CKAN__HARVEST__MQ__HOSTNAME=localhost
 ENV CKAN__HARVEST__MQ__PORT=6379
 RUN apk add --no-cache linux-headers && \
     cd ${SRC_DIR} && \
-    wget http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz && \
+    curl -O http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz && \
     tar xzf redis-${REDIS_VERSION}.tar.gz && \
     rm -f redis-${REDIS_VERSION}.tar.gz && \
     cd redis-${REDIS_VERSION} && \
