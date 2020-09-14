@@ -41,7 +41,7 @@ RUN curl -o ${SRC_DIR}/get-pip.py https://bootstrap.pypa.io/get-pip.py && \
 RUN pip install -e git+${GIT_URL}@${GIT_BRANCH}#egg=ckan
 RUN rm -rf /srv/app/src/ckan/.git
 RUN pip wheel --wheel-dir=/wheels -r ckan/requirements.txt
-RUN pip wheel --wheel-dir=/wheels uwsgi gevent
+RUN pip wheel --wheel-dir=/wheels uwsgi gevent==1.4.0
 
 ############
 ### MAIN ###
